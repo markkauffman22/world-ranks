@@ -1,4 +1,3 @@
-
 .counts {
   margin: 12px 0;
   color: var(--text-color-secondary);
@@ -15,7 +14,7 @@
   }
 
   .counts {
-    flex: 2;
+    flex: 1;
   }
 
   .input {

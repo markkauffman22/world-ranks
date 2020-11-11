@@ -15,22 +15,26 @@ export default function Home({ countries }) {
       country.region.toLowerCase().includes(keyword) ||
       country.subregion.toLowerCase().includes(keyword)
   )
-  
 
   const onInputChange = (e) => {
     e.preventDefault()
-
     setKeyword(e.target.value.toLowerCase())
   }
 
   return (
     <Layout>
-      <div className={styles.counts}>Found {filteredCountries.length} countries</div>
+      <div className={styles.inputContainer}>
+        <div className={styles.counts}>
+          Found {filteredCountries.length} countries
+        </div>
 
-      <SearchInput 
-        placeholder="Filter by Name, Region or SubRegion" 
-        onChange={onInputChange}
-        />
+        <div className={styles.input}>
+          <SearchInput
+            placeholder="Filter by Name, Region or SubRegion"
+            onChange={onInputChange}
+          />
+        </div>
+      </div>
       <CountriesTable countries={filteredCountries} />
     </Layout>
   )
