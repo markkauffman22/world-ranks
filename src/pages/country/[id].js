@@ -1,31 +1,31 @@
-import { useEffect, useState } from "react";
-import Layout from "../../components/Layout/Layout";
-import styles from "./Country.module.css";
+import { useEffect, useState } from 'react'
+import Layout from '../../components/Layout/Layout'
+import styles from './country.module.css'
 
 const getCountry = async (id) => {
-  const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${id}`);
+  const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${id}`)
 
-  const country = await res.json();
+  const country = await res.json()
 
-  return country;
-};
+  return country
+}
 
 const Country = ({ country }) => {
-  const [borders, setBorders] = useState([]);
+  const [borders, setBorders] = useState([])
 
   const getBorders = async () => {
     const borders = await Promise.all(
       country.borders.map((border) => getCountry(border))
-    );
+    )
 
-    setBorders(borders);
-  };
+    setBorders(borders)
+  }
 
   useEffect(() => {
-    getBorders();
-  }, []);
+    getBorders()
+  }, [])
 
-  console.log(borders);
+  console.log(borders)
 
   return (
     <Layout title={country.name}>
@@ -66,14 +66,14 @@ const Country = ({ country }) => {
             <div className={styles.details_panel_row}>
               <div className={styles.details_panel_label}>Languages</div>
               <div className={styles.details_panel_value}>
-                {country.languages.map(({ name }) => name).join(", ")}
+                {country.languages.map(({ name }) => name).join(', ')}
               </div>
             </div>
 
             <div className={styles.details_panel_row}>
               <div className={styles.details_panel_label}>Currencies</div>
               <div className={styles.details_panel_value}>
-                {country.currencies.map(({ name }) => name).join(", ")}
+                {country.currencies.map(({ name }) => name).join(', ')}
               </div>
             </div>
 
@@ -110,31 +110,31 @@ const Country = ({ country }) => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Country;
+export default Country
 
 export const getStaticPaths = async () => {
-  const res = await fetch("https://restcountries.eu/rest/v2/all");
-  const countries = await res.json();
+  const res = await fetch('https://restcountries.eu/rest/v2/all')
+  const countries = await res.json()
 
   const paths = countries.map((country) => ({
     params: { id: country.alpha3Code },
-  }));
+  }))
 
   return {
     paths,
     fallback: false,
-  };
-};
+  }
+}
 
 export const getStaticProps = async ({ params }) => {
-  const country = await getCountry(params.id);
+  const country = await getCountry(params.id)
 
   return {
     props: {
       country,
     },
-  };
-};
+  }
+}
